@@ -1,0 +1,10 @@
+[test]
+# Preload runs before any test file. Used to ensure dist/kauri exists for
+# layer-3 (CLI) and layer-4 (MCP) suites — see tests/helpers/preload.ts.
+preload = ["./tests/helpers/preload.ts"]
+
+# Coverage is enabled at suite level; thresholds are asserted in CI rather
+# than failing locally during dev.
+coverage = true
+coverageReporter = ["text", "lcov"]
+coverageDir = "coverage"

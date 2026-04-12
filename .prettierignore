@@ -1,0 +1,8 @@
+node_modules
+dist
+coverage
+bun.lock
+src/store/migrations-data.ts
+*.db
+*.db-wal
+*.db-shm

@@ -1,0 +1,40 @@
+{
+  "name": "kauri",
+  "version": "0.1.0-dev",
+  "description": "A deterministic record database for LLM agents and humans",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "kauri": "./dist/kauri"
+  },
+  "scripts": {
+    "dev": "bun run src/cli.ts",
+    "embed-migrations": "bun run scripts/embed-migrations.ts",
+    "prebuild": "bun run embed-migrations",
+    "build": "bun run scripts/build.ts",
+    "test": "bun test",
+    "test:unit": "bun test tests/unit",
+    "test:integration": "bun test tests/integration",
+    "test:cli": "bun test tests/cli",
+    "test:mcp": "bun test tests/mcp",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "commander": "^14.0.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/bun": "latest",
+    "@typescript-eslint/eslint-plugin": "^8.58.1",
+    "@typescript-eslint/parser": "^8.58.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-import": "^2.32.0",
+    "prettier": "^3.8.2",
+    "typescript": "^6.0.2"
+  }
+}
