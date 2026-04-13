@@ -14,9 +14,8 @@ src/store/migrations-data.ts
 coverage
 *.lcov
 
-# Kauri stores (project + user) — never commit local DBs
-.kauri/
-*.db
+# Kauri — the .kauri/ directory IS committed so project decisions travel
+# with the repo. Only the SQLite WAL/SHM runtime files are excluded.
 *.db-wal
 *.db-shm
 

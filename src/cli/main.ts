@@ -18,12 +18,14 @@ import { Store } from '../store/store.ts';
 import { registerCheck } from './commands/check.ts';
 import { registerHistory } from './commands/history.ts';
 import { registerInit } from './commands/init.ts';
+import { registerMergeDriver } from './commands/merge-driver.ts';
 import { registerMigrate } from './commands/migrate.ts';
 import { registerPin, registerUnpin } from './commands/pin.ts';
 import { registerProject } from './commands/project.ts';
 import { registerQuery } from './commands/query.ts';
 import { registerRecord } from './commands/record.ts';
 import { registerServe } from './commands/serve.ts';
+import { registerSetupGit } from './commands/setup-git.ts';
 import { registerShow } from './commands/show.ts';
 import { registerStatus } from './commands/status.ts';
 import { registerTaxonomy } from './commands/taxonomy.ts';
@@ -36,7 +38,7 @@ export function buildProgram(): Command {
   program
     .name('kauri')
     .description('A deterministic record database for LLM agents and humans')
-    .version('0.1.0-dev')
+    .version('0.1.0')
     .option('-j, --json', 'Output as JSON', false)
     .option('--source <source>', 'Source attribution', 'manual');
 
@@ -54,6 +56,8 @@ export function buildProgram(): Command {
   registerTaxonomy(program);
   registerStatus(program);
   registerMigrate(program);
+  registerMergeDriver(program);
+  registerSetupGit(program);
   registerServe(program);
 
   return program;
