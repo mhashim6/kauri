@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            target: bun-darwin-arm64
+            artifact: kauri-darwin-arm64
+          - os: macos-13
+            target: bun-darwin-x64
+            artifact: kauri-darwin-x64
+          - os: ubuntu-latest
+            target: bun-linux-x64
+            artifact: kauri-linux-x64
+          - os: ubuntu-latest
+            target: bun-linux-arm64
+            artifact: kauri-linux-arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run embed-migrations
+
+      - name: Build binary
+        run: |
+          bun build --compile --minify \
+            --target=${{ matrix.target }} \
+            --outfile dist/${{ matrix.artifact }} \
+            src/cli.ts
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist/${{ matrix.artifact }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: false
+
+      - name: Create GitHub Release
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file CHANGELOG.md \
+            artifacts/kauri-darwin-arm64/kauri-darwin-arm64 \
+            artifacts/kauri-darwin-x64/kauri-darwin-x64 \
+            artifacts/kauri-linux-x64/kauri-linux-x64 \
+            artifacts/kauri-linux-arm64/kauri-linux-arm64
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
