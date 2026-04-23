@@ -14,6 +14,7 @@ export function registerRecord(program: Command): void {
     .option('-f, --body-file <path>', 'Read body from file')
     .option('-T, --tag <tag...>', 'Tags (repeatable)')
     .option('-F, --file <path...>', 'Associated file paths (repeatable)')
+    .option('-L, --link <id...>', 'IDs of related records (repeatable)')
     .option('-S, --status <status>', 'draft or active', 'active')
     .option('-X, --supersedes <id>', 'ID of record being replaced')
     .option('--ttl <days>', 'Override ttl_days')
@@ -35,6 +36,7 @@ export function registerRecord(program: Command): void {
           source: getSource(cmd),
           status: (opts['status'] as 'draft' | 'active') ?? 'active',
           files: opts['file'] as string[] | undefined,
+          links: opts['link'] as string[] | undefined,
           supersedes: opts['supersedes'] as string | undefined,
           ttlDays: opts['ttl'] !== undefined ? Number(opts['ttl']) : undefined,
           pinned: opts['pin'] === true,

@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
 
 import { META_DEFAULTS } from '../../src/core/constants.ts';
 import { KauriError } from '../../src/core/errors.ts';
+import { latestVersion } from '../../src/store/migrations.ts';
 import { MetaRepo } from '../../src/store/repo/meta.ts';
 import { makeTmpStore, type TmpStore } from '../helpers/tmp-store.ts';
 
@@ -110,7 +111,7 @@ describe('MetaRepo — created_at', () => {
 
 describe('MetaRepo — schema_version', () => {
   test('reads the seeded value (set by the migration runner)', () => {
-    expect(meta.getSchemaVersion()).toBe(1);
+    expect(meta.getSchemaVersion()).toBe(latestVersion());
   });
 
   test('setSchemaVersion accepts non-negative integers', () => {

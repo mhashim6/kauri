@@ -51,6 +51,12 @@ export interface RecordTagRow {
   readonly tag: string;
 }
 
+/** One row in `record_links`. */
+export interface RecordLinkRow {
+  readonly from_record_id: string;
+  readonly to_record_id: string;
+}
+
 /** One row in `taxonomy`. */
 export interface TaxonomyRow {
   readonly tag: string;
@@ -72,6 +78,7 @@ export function rowToRecord(
   row: RecordRow,
   tags: readonly string[],
   files: readonly FileAssoc[],
+  links: readonly string[] = [],
 ): KauriRecord {
   return {
     id: row.id,
@@ -82,6 +89,7 @@ export function rowToRecord(
     body: row.body,
     tags,
     files,
+    links,
     source: row.source,
     supersedes: row.supersedes,
     supersededBy: row.superseded_by,

@@ -46,6 +46,11 @@ interface FileRow {
   readonly sha256: string | null;
 }
 
+interface LinkRow {
+  readonly from_record_id: string;
+  readonly to_record_id: string;
+}
+
 interface TaxRow {
   readonly tag: string;
   readonly added: string;
@@ -128,6 +133,7 @@ function mergeInto(base: Database, ours: Database, theirs: Database): MergeResul
         insertRecord(ours, theirRec);
         copyRecordTags(theirs, ours, theirRec.id);
         copyRecordFiles(theirs, ours, theirRec.id);
+        copyRecordLinks(theirs, ours, theirRec.id);
         insertedFromTheirs++;
       } else if (!inBase && inOurs) {
         // **ID collision**: both branches created a record with the same
@@ -136,10 +142,11 @@ function mergeInto(base: Database, ours: Database, theirs: Database): MergeResul
         const newId = nextAvailableId(ours, theirRec);
         const renamedRec = { ...theirRec, id: newId };
         insertRecord(ours, renamedRec);
-        // Copy tags/files using the ORIGINAL id from theirs DB, but
-        // insert them under the NEW id in ours.
+        // Copy tags/files/links using the ORIGINAL id from theirs DB,
+        // but insert them under the NEW id in ours.
         copyRecordTagsRenamed(theirs, ours, theirRec.id, newId);
         copyRecordFilesRenamed(theirs, ours, theirRec.id, newId);
+        copyRecordLinksRenamed(theirs, ours, theirRec.id, newId);
         renamedIds.push({ originalId: theirRec.id, newId });
         insertedFromTheirs++;
       } else if (inBase && inOurs) {
@@ -153,6 +160,7 @@ function mergeInto(base: Database, ours: Database, theirs: Database): MergeResul
           replaceRecord(ours, theirRec);
           replaceRecordTags(theirs, ours, theirRec.id);
           replaceRecordFiles(theirs, ours, theirRec.id);
+          replaceRecordLinks(theirs, ours, theirRec.id);
           updatedFromTheirs++;
         }
       }
@@ -160,9 +168,10 @@ function mergeInto(base: Database, ours: Database, theirs: Database): MergeResul
       // !inBase && !inOurs with collision handled above.
     }
 
-    // Fix supersedes/superseded_by references to renamed IDs.
+    // Fix supersedes/superseded_by and link references to renamed IDs.
     for (const rename of renamedIds) {
       fixSupersessionRefs(ours, rename.originalId, rename.newId);
+      fixLinkRefs(ours, rename.originalId, rename.newId);
     }
 
     // Merge taxonomy: union of both sides.
@@ -364,6 +373,55 @@ function copyRecordFilesRenamed(
       )
       .run(targetRecordId, row.path, row.mtime, row.size, row.sha256);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Links
+// ---------------------------------------------------------------------------
+
+function copyRecordLinks(source: Database, target: Database, recordId: string): void {
+  const rows = source
+    .query<LinkRow, [string]>(
+      'SELECT from_record_id, to_record_id FROM record_links WHERE from_record_id = ?',
+    )
+    .all(recordId);
+  for (const row of rows) {
+    target
+      .query('INSERT OR IGNORE INTO record_links(from_record_id, to_record_id) VALUES (?, ?)')
+      .run(row.from_record_id, row.to_record_id);
+  }
+}
+
+function replaceRecordLinks(source: Database, target: Database, recordId: string): void {
+  target.query('DELETE FROM record_links WHERE from_record_id = ?').run(recordId);
+  copyRecordLinks(source, target, recordId);
+}
+
+function copyRecordLinksRenamed(
+  source: Database,
+  target: Database,
+  sourceRecordId: string,
+  targetRecordId: string,
+): void {
+  const rows = source
+    .query<LinkRow, [string]>(
+      'SELECT from_record_id, to_record_id FROM record_links WHERE from_record_id = ?',
+    )
+    .all(sourceRecordId);
+  for (const row of rows) {
+    target
+      .query('INSERT OR IGNORE INTO record_links(from_record_id, to_record_id) VALUES (?, ?)')
+      .run(targetRecordId, row.to_record_id);
+  }
+}
+
+/**
+ * After renaming an incoming record's ID, fix any link references that
+ * point to the old ID (as a target).
+ */
+function fixLinkRefs(db: Database, oldId: string, newId: string): void {
+  db.query('UPDATE record_links SET to_record_id = ? WHERE to_record_id = ?').run(newId, oldId);
+  db.query('UPDATE record_links SET from_record_id = ? WHERE from_record_id = ?').run(newId, oldId);
 }
 
 // ---------------------------------------------------------------------------

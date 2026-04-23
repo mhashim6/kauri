@@ -20,6 +20,7 @@ import { parseId } from '../core/ids.ts';
 import type { Scope, ScopeQuery } from '../core/types.ts';
 import type { FsProbe } from '../fs/files.ts';
 import { FilesRepo } from '../store/repo/files.ts';
+import { RecordLinksRepo } from '../store/repo/links.ts';
 import { MetaRepo } from '../store/repo/meta.ts';
 import { RecordsRepo } from '../store/repo/records.ts';
 import { RecordTagsRepo, TaxonomyRepo } from '../store/repo/tags.ts';
@@ -36,6 +37,7 @@ export interface StoreBundle {
   readonly tags: RecordTagsRepo;
   readonly taxonomy: TaxonomyRepo;
   readonly files: FilesRepo;
+  readonly links: RecordLinksRepo;
   readonly meta: MetaRepo;
 }
 
@@ -44,9 +46,10 @@ export function makeStoreBundle(store: Store): StoreBundle {
   const taxonomy = new TaxonomyRepo(store.db);
   const tags = new RecordTagsRepo(store.db);
   const files = new FilesRepo(store.db);
-  const records = new RecordsRepo(store.db, tags, files);
+  const links = new RecordLinksRepo(store.db);
+  const records = new RecordsRepo(store.db, tags, files, links);
   const meta = new MetaRepo(store.db);
-  return { store, records, tags, taxonomy, files, meta };
+  return { store, records, tags, taxonomy, files, links, meta };
 }
 
 // ---------------------------------------------------------------------------

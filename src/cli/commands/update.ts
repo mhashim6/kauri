@@ -14,6 +14,7 @@ export function registerUpdate(program: Command): void {
     .option('-f, --body-file <path>', 'Read body from file')
     .option('-T, --tag <tag...>', 'Replace tags (repeatable)')
     .option('-F, --file <path...>', 'Replace file associations (repeatable)')
+    .option('-L, --link <id...>', 'Replace linked records (repeatable)')
     .option('--ttl <days>', 'Override ttl_days (use "" to clear)')
     .option('--pin', 'Pin this record')
     .option('--no-pin', 'Unpin this record')
@@ -41,6 +42,7 @@ export function registerUpdate(program: Command): void {
           body,
           tags: opts['tag'] as string[] | undefined,
           files: opts['file'] as string[] | undefined,
+          links: opts['link'] as string[] | undefined,
           ttlDays,
           pinned,
           allowNewTags: opts['allowNewTags'] === true,

@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
 
 import { KauriError } from '../../src/core/errors.ts';
 import { FilesRepo } from '../../src/store/repo/files.ts';
+import { RecordLinksRepo } from '../../src/store/repo/links.ts';
 import {
   type NewRecordInput,
   RecordsRepo,
@@ -24,7 +25,7 @@ beforeEach(() => {
   taxonomy = new TaxonomyRepo(tmp.store.db);
   tags = new RecordTagsRepo(tmp.store.db);
   files = new FilesRepo(tmp.store.db);
-  records = new RecordsRepo(tmp.store.db, tags, files);
+  records = new RecordsRepo(tmp.store.db, tags, files, new RecordLinksRepo(tmp.store.db));
   // Pre-seed taxonomy with the tags used across tests in this file.
   taxonomy.addMany(['api', 'security', 'data', 'testing'], '2026-01-01T00:00:00.000Z');
 });

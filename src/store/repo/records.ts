@@ -30,6 +30,7 @@ import type { KauriRecord, Kind, Scope, Status } from '../../core/types.ts';
 import { pinnedToInt, type RecordRow, rowToRecord } from '../schema.ts';
 
 import type { FilesRepo } from './files.ts';
+import type { RecordLinksRepo } from './links.ts';
 import type { RecordTagsRepo } from './tags.ts';
 
 // ---------------------------------------------------------------------------
@@ -154,6 +155,7 @@ export class RecordsRepo {
     private readonly db: Database,
     private readonly tags: RecordTagsRepo,
     private readonly files: FilesRepo,
+    private readonly links: RecordLinksRepo,
   ) {
     this.findRowStmt = db.query<RecordRow, [string]>(
       `SELECT id, kind, scope, status, title, body, source,
@@ -378,7 +380,7 @@ export class RecordsRepo {
     if (row === null) {
       return null;
     }
-    return rowToRecord(row, this.tags.tagsFor(id), this.files.list(id));
+    return rowToRecord(row, this.tags.tagsFor(id), this.files.list(id), this.links.allLinks(id));
   }
 
   /**

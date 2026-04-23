@@ -70,6 +70,7 @@ describe('Store.openAt + migration 0001', () => {
     expect(tables).toContain('records');
     expect(tables).toContain('record_tags');
     expect(tables).toContain('record_files');
+    expect(tables).toContain('record_links');
     expect(tables).toContain('taxonomy');
     expect(tables).toContain('meta');
     expect(tables).toContain('records_fts');
@@ -84,7 +85,7 @@ describe('Store.openAt + migration 0001', () => {
       .map((r) => r.name)
       .sort();
     expect(indexes).toEqual(
-      ['idx_records_status', 'idx_records_kind', 'idx_records_pinned', 'idx_record_tags_tag', 'idx_record_files_path'].sort(),
+      ['idx_records_status', 'idx_records_kind', 'idx_records_pinned', 'idx_record_tags_tag', 'idx_record_files_path', 'idx_record_links_to'].sort(),
     );
   });
 
@@ -111,12 +112,11 @@ describe('Store.openAt + migration 0001', () => {
     const row = tmp.store.db
       .query<{ value: string }, [string]>('SELECT value FROM meta WHERE key = ?')
       .get('schema_version');
-    expect(row?.value).toBe('1');
+    expect(row?.value).toBe(String(latestVersion()));
   });
 
   test('PRAGMA user_version reflects the latest migration', () => {
     expect(currentVersion(tmp.store.db)).toBe(latestVersion());
-    expect(currentVersion(tmp.store.db)).toBe(1);
   });
 
   test('records.scope CHECK constraint rejects bogus values', () => {

@@ -59,6 +59,8 @@ export interface KauriRecord {
   readonly body: string;
   readonly tags: readonly string[];
   readonly files: readonly FileAssoc[];
+  /** IDs of related records (bidirectional — both directions are merged on read). */
+  readonly links: readonly string[];
   readonly source: string;
   readonly supersedes: string | null;
   readonly supersededBy: string | null;

@@ -46,6 +46,7 @@ export interface CreateInput {
   readonly source: string;
   readonly status?: Status | undefined;
   readonly files?: readonly string[] | undefined;
+  readonly links?: readonly string[] | undefined;
   readonly supersedes?: string | undefined;
   readonly ttlDays?: number | null | undefined;
   readonly pinned?: boolean | undefined;
@@ -105,6 +106,10 @@ export function createRecord(ctx: ServiceContext, input: CreateInput): CreateRes
     if (fileAssocs.length > 0) {
       bundle.files.replace(id, fileAssocs);
     }
+    if (input.links !== undefined && input.links.length > 0) {
+      validateLinkTargets(bundle, input.links);
+      bundle.links.set(id, input.links);
+    }
     if (input.supersedes !== undefined) {
       bundle.records.linkSupersession(input.supersedes, id, now);
     }
@@ -136,6 +141,7 @@ export interface UpdateInput {
   readonly body?: string | undefined;
   readonly tags?: readonly string[] | undefined;
   readonly files?: readonly string[] | undefined;
+  readonly links?: readonly string[] | undefined;
   readonly ttlDays?: number | null | undefined;
   readonly pinned?: boolean | undefined;
   readonly allowNewTags?: boolean | undefined;
@@ -181,6 +187,12 @@ export function updateRecord(ctx: ServiceContext, input: UpdateInput): UpdateRes
     // Files.
     if (fileAssocs !== null) {
       bundle.files.replace(input.id, fileAssocs);
+    }
+
+    // Links.
+    if (input.links !== undefined) {
+      validateLinkTargets(bundle, input.links);
+      bundle.links.set(input.id, input.links);
     }
 
     // Pinned (separate from scalars — no revision bump).
@@ -332,6 +344,19 @@ function ensureTags(
     }
   }
   return normalized;
+}
+
+/**
+ * Validate that all link target IDs exist in the store. Throws on the
+ * first missing target.
+ */
+function validateLinkTargets(bundle: StoreBundle, linkedIds: readonly string[]): void {
+  for (const id of linkedIds) {
+    const row = bundle.records.findRowById(id);
+    if (row === null) {
+      throw new KauriError('not_found', `link target '${id}' does not exist`, { id });
+    }
+  }
 }
 
 /**
