@@ -20,6 +20,7 @@ function makeRecord(overrides: Partial<KauriRecord> & { id: string; title: strin
     body: 'default body',
     tags: ['architecture'],
     files: [],
+    links: [],
     source: 'agent:test',
     supersedes: null,
     supersededBy: null,
