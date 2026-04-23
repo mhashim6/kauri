@@ -1,8 +1,11 @@
 name: Release
 
 on:
-  push:
-    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v0.1.0)'
+        required: true
 
 permissions:
   contents: write
@@ -61,9 +64,14 @@ jobs:
 
       - name: Create GitHub Release
         run: |
-          gh release create "$GITHUB_REF_NAME" \
-            --title "$GITHUB_REF_NAME" \
-            --notes-file CHANGELOG.md \
+          if [ -f CHANGELOG.md ]; then
+            NOTES_FLAG="--notes-file CHANGELOG.md"
+          else
+            NOTES_FLAG="--generate-notes"
+          fi
+          gh release create "${{ github.event.inputs.tag }}" \
+            --title "${{ github.event.inputs.tag }}" \
+            $NOTES_FLAG \
             artifacts/kauri-darwin-arm64/kauri-darwin-arm64 \
             artifacts/kauri-darwin-x64/kauri-darwin-x64 \
             artifacts/kauri-linux-x64/kauri-linux-x64 \
