@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="circle-clip-d">
+      <circle cx="256" cy="256" r="220"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Outer circle -->
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#8B6914" stroke-width="8" opacity="0.9"/>
+  
+  <g clip-path="url(#circle-clip-d)">
+    <!-- Centre dot -->
+    <circle cx="265" cy="365" r="7" fill="#8B6914"/>
+    
+    <!-- Main left branch - curves dramatically -->
+    <path d="M265,365 Q225,310 195,255 Q170,210 140,160 Q130,140 120,115" 
+          fill="none" stroke="#8B6914" stroke-width="13" stroke-linecap="round"/>
+    <!-- Left upper fork -->
+    <path d="M140,160 Q125,135 115,100" 
+          fill="none" stroke="#8B6914" stroke-width="7" stroke-linecap="round"/>
+    <!-- Left side fork -->
+    <path d="M140,160 Q160,140 175,118" 
+          fill="none" stroke="#8B6914" stroke-width="5" stroke-linecap="round"/>
+    
+    <!-- Main right branch - curves and bends -->
+    <path d="M265,365 Q300,295 340,230 Q365,190 385,150 Q395,130 400,105" 
+          fill="none" stroke="#8B6914" stroke-width="11" stroke-linecap="round"/>
+    <!-- Right upper fork -->
+    <path d="M385,150 Q400,125 415,95" 
+          fill="none" stroke="#8B6914" stroke-width="7" stroke-linecap="round"/>
+    <!-- Right side fork -->
+    <path d="M385,150 Q370,130 358,105" 
+          fill="none" stroke="#8B6914" stroke-width="5" stroke-linecap="round"/>
+    
+    <!-- Centre branch - slightly off-centre, organic curve -->
+    <path d="M265,365 Q270,290 275,220 Q278,170 282,115 Q284,95 288,72" 
+          fill="none" stroke="#8B6914" stroke-width="9" stroke-linecap="round"/>
+    <!-- Centre fork left -->
+    <path d="M275,220 Q258,195 245,170" 
+          fill="none" stroke="#8B6914" stroke-width="5" stroke-linecap="round"/>
+    <!-- Centre fork right -->
+    <path d="M275,220 Q295,195 310,170" 
+          fill="none" stroke="#8B6914" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Inner left branch - thinner, wanders -->
+    <path d="M265,365 Q240,300 215,240 Q200,210 185,175" 
+          fill="none" stroke="#8B6914" stroke-width="7" stroke-linecap="round"/>
+    <!-- Inner left small fork -->
+    <path d="M215,240 Q200,225 188,208" 
+          fill="none" stroke="#8B6914" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Far right low sweeping branch -->
+    <path d="M265,365 Q320,335 370,290 Q400,265 420,235" 
+          fill="none" stroke="#8B6914" stroke-width="7" stroke-linecap="round"/>
+    <!-- Sweep fork -->
+    <path d="M370,290 Q385,268 398,242" 
+          fill="none" stroke="#8B6914" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Far left low branch -->
+    <path d="M265,365 Q215,345 170,310 Q150,296 130,278" 
+          fill="none" stroke="#8B6914" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

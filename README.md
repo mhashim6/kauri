@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.svg" alt="Kauri" width="200" />
+</p>
+
 # Kauri
 
 LLM agents are powerful but forgetful. They don't remember what your team decided last month, why you chose Postgres over DynamoDB, or that the auth module has a constraint nobody documented. Every session starts from zero.
@@ -112,23 +116,23 @@ We evaluated committing a `.sql` text dump instead of the binary for readable di
 
 ## CLI reference
 
-| Command | What it does |
-|---|---|
-| `kauri init` | Create a store in the current directory |
-| `kauri record -t "..." -b "..." -T tag` | Record a decision (`-F` files, `-L` links, `--supersedes`) |
-| `kauri update <id>` | Edit a record's mutable fields (`-t`, `-b`, `-T`, `-F`, `-L`) |
-| `kauri query [--text "..."]` | Search decisions (filter by `--tag`, `--file`, `--status`, `--since`) |
-| `kauri show <id>` | View a decision in full |
-| `kauri history <id>` | Walk the supersession chain |
-| `kauri validate <id> still_valid` | Confirm a decision is current |
-| `kauri validate <id> deprecate` | Retire a decision |
-| `kauri pin <id>` / `kauri unpin <id>` | Pin/unpin a record (pinned = body shown in projection) |
-| `kauri project` | Compile decisions for agent context |
-| `kauri check` | Run staleness detection |
-| `kauri status` | Summary: counts by status, stale count, taxonomy size |
-| `kauri taxonomy` | List or manage the tag taxonomy |
-| `kauri setup-git` | Register the Kauri merge driver in the current git repo |
-| `kauri serve` | Start the MCP server (stdio transport) |
+| Command                                 | What it does                                                          |
+| --------------------------------------- | --------------------------------------------------------------------- |
+| `kauri init`                            | Create a store in the current directory                               |
+| `kauri record -t "..." -b "..." -T tag` | Record a decision (`-F` files, `-L` links, `--supersedes`)            |
+| `kauri update <id>`                     | Edit a record's mutable fields (`-t`, `-b`, `-T`, `-F`, `-L`)         |
+| `kauri query [--text "..."]`            | Search decisions (filter by `--tag`, `--file`, `--status`, `--since`) |
+| `kauri show <id>`                       | View a decision in full                                               |
+| `kauri history <id>`                    | Walk the supersession chain                                           |
+| `kauri validate <id> still_valid`       | Confirm a decision is current                                         |
+| `kauri validate <id> deprecate`         | Retire a decision                                                     |
+| `kauri pin <id>` / `kauri unpin <id>`   | Pin/unpin a record (pinned = body shown in projection)                |
+| `kauri project`                         | Compile decisions for agent context                                   |
+| `kauri check`                           | Run staleness detection                                               |
+| `kauri status`                          | Summary: counts by status, stale count, taxonomy size                 |
+| `kauri taxonomy`                        | List or manage the tag taxonomy                                       |
+| `kauri setup-git`                       | Register the Kauri merge driver in the current git repo               |
+| `kauri serve`                           | Start the MCP server (stdio transport)                                |
 
 Every command supports `--json` and `--help`.
 
