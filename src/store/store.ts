@@ -69,15 +69,29 @@ export class Store {
   }
 
   /**
-   * Close the underlying connection. Idempotent — calling close on an
-   * already-closed store is a no-op so callers don't need to track
-   * lifecycle state.
+   * Close the underlying connection. Before closing, checkpoints the
+   * WAL so all data is flushed into the main `.db` file. This is
+   * essential because the WAL/SHM files are gitignored — if we don't
+   * checkpoint, recent writes live only in the WAL and `git add`
+   * won't see them.
+   *
+   * Idempotent — calling close on an already-closed store is a no-op.
    */
   public close(): void {
     if (this.closed) {
       return;
     }
     this.closed = true;
+    try {
+      // TRUNCATE mode: checkpoint all WAL content into the main file,
+      // then truncate the WAL file to zero bytes. The result is a
+      // self-contained .db file with no WAL/SHM dependencies.
+      this.db.exec('PRAGMA wal_checkpoint(TRUNCATE)');
+    } catch {
+      // Best-effort: if checkpoint fails (e.g. another connection holds
+      // a read lock), we still close. The data is still in the WAL and
+      // will be checkpointed on the next open.
+    }
     this.db.close();
   }
 

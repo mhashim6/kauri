@@ -1,0 +1,30 @@
+{
+  "name": "kauri-claude-code",
+  "version": "0.1.0",
+  "description": "Kauri plugin for Claude Code — decision memory for coding sessions",
+  "license": "MIT",
+  "files": [
+    "hooks/",
+    "scripts/",
+    "skills/",
+    "README.md"
+  ],
+  "keywords": [
+    "claude-code-plugin",
+    "kauri",
+    "mcp",
+    "decisions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhashim6/kauri.git",
+    "directory": "plugins/claude-code"
+  },
+  "homepage": "https://github.com/mhashim6/kauri/tree/main/plugins/claude-code",
+  "peerDependencies": {
+    "kauri": ">=0.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

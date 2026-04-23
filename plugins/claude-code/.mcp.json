@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "kauri": {
+      "command": "kauri",
+      "args": ["serve"],
+      "env": {}
+    }
+  }
+}
