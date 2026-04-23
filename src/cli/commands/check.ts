@@ -62,7 +62,9 @@ function formatStaleRecord(sr: StaleRecord): void {
   printText(`  ${sr.record.id}  ${sr.record.scope}  [${tags}]  ${sr.record.title}`);
   for (const reason of sr.reasons) {
     if (reason.kind === 'time') {
-      printText(`            TTL expired: last validated ${reason.daysSinceValidation}d ago (ttl=${reason.ttlDays}d)`);
+      printText(
+        `            TTL expired: last validated ${reason.daysSinceValidation}d ago (ttl=${reason.ttlDays}d)`,
+      );
     } else if (reason.kind === 'file_changed') {
       printText(`            ${reason.path} content changed since last validation`);
     } else if (reason.kind === 'file_missing') {

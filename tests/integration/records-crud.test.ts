@@ -3,10 +3,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
 import { KauriError } from '../../src/core/errors.ts';
 import { FilesRepo } from '../../src/store/repo/files.ts';
 import { RecordLinksRepo } from '../../src/store/repo/links.ts';
-import {
-  type NewRecordInput,
-  RecordsRepo,
-} from '../../src/store/repo/records.ts';
+import { type NewRecordInput, RecordsRepo } from '../../src/store/repo/records.ts';
 import { RecordTagsRepo, TaxonomyRepo } from '../../src/store/repo/tags.ts';
 import { makeTmpStore, type TmpStore } from '../helpers/tmp-store.ts';
 
@@ -77,16 +74,12 @@ describe('RecordsRepo — insert and counter generation', () => {
   });
 
   test('user-scope IDs use the usr prefix regardless of slug', () => {
-    const id = tmp.store.tx(() =>
-      records.insert(makeInput({ scope: 'user', slug: 'ignored' })),
-    );
+    const id = tmp.store.tx(() => records.insert(makeInput({ scope: 'user', slug: 'ignored' })));
     expect(id).toBe('usr-DEC-0001');
   });
 
   test('hyphenated slugs are preserved in the ID', () => {
-    const id = tmp.store.tx(() =>
-      records.insert(makeInput({ slug: 'my-cool-app' })),
-    );
+    const id = tmp.store.tx(() => records.insert(makeInput({ slug: 'my-cool-app' })));
     expect(id).toBe('my-cool-app-DEC-0001');
   });
 
@@ -129,16 +122,12 @@ describe('RecordsRepo — findById', () => {
     const id = tmp.store.tx(() => {
       const newId = records.insert(makeInput());
       tags.set(newId, ['api', 'security']);
-      files.replace(newId, [
-        { path: 'src/a.ts', mtime: 100, size: 10, sha256: 'h' },
-      ]);
+      files.replace(newId, [{ path: 'src/a.ts', mtime: 100, size: 10, sha256: 'h' }]);
       return newId;
     });
     const rec = records.findById(id);
     expect(rec?.tags).toEqual(['api', 'security']);
-    expect(rec?.files).toEqual([
-      { path: 'src/a.ts', mtime: 100, size: 10, sha256: 'h' },
-    ]);
+    expect(rec?.files).toEqual([{ path: 'src/a.ts', mtime: 100, size: 10, sha256: 'h' }]);
   });
 });
 
@@ -172,11 +161,7 @@ describe('RecordsRepo — updateScalars', () => {
 
   test('multiple fields update in one call', () => {
     const id = tmp.store.tx(() => records.insert(makeInput()));
-    records.updateScalars(
-      id,
-      { title: 't2', body: 'b2', ttlDays: 7 },
-      '2026-04-12T00:00:00.000Z',
-    );
+    records.updateScalars(id, { title: 't2', body: 'b2', ttlDays: 7 }, '2026-04-12T00:00:00.000Z');
     const rec = records.findById(id);
     expect(rec?.title).toBe('t2');
     expect(rec?.body).toBe('b2');
@@ -265,9 +250,9 @@ describe('RecordsRepo — linkSupersession', () => {
   });
 
   test('throws not_found for unknown id', () => {
-    expect(() =>
-      records.linkSupersession('kauri-DEC-9999', 'kauri-DEC-0001', NOW),
-    ).toThrow(KauriError);
+    expect(() => records.linkSupersession('kauri-DEC-9999', 'kauri-DEC-0001', NOW)).toThrow(
+      KauriError,
+    );
   });
 });
 
@@ -281,9 +266,7 @@ describe('RecordsRepo — walkChain', () => {
       const ids: string[] = [];
       let prev: string | null = null;
       for (let i = 0; i < length; i++) {
-        const id = records.insert(
-          makeInput({ title: `step ${i}`, supersedes: prev }),
-        );
+        const id = records.insert(makeInput({ title: `step ${i}`, supersedes: prev }));
         if (prev !== null) {
           records.linkSupersession(prev, id, NOW);
         }

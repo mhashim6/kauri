@@ -58,17 +58,13 @@ describe('CLI workflow', () => {
     expect(showOut).toContain('Revision: 1');
 
     // Update
-    const updateOut = await runOk(
-      ['update', 'clitest-DEC-0001', '-t', 'Use JWT with refresh'],
-      { cwd: dir },
-    );
+    const updateOut = await runOk(['update', 'clitest-DEC-0001', '-t', 'Use JWT with refresh'], {
+      cwd: dir,
+    });
     expect(updateOut).toContain('revision 2');
 
     // Validate
-    const valOut = await runOk(
-      ['validate', 'clitest-DEC-0001', 'still_valid'],
-      { cwd: dir },
-    );
+    const valOut = await runOk(['validate', 'clitest-DEC-0001', 'still_valid'], { cwd: dir });
     expect(valOut).toContain('active');
   });
 
@@ -119,10 +115,9 @@ describe('CLI workflow', () => {
   test.skipIf(skip)('history shows supersession chain', async () => {
     await runOk(['init', '--slug', 'clitest'], { cwd: dir });
     await runOk(['record', '-t', 'V1', '-b', 'first', '-T', 'api'], { cwd: dir });
-    await runOk(
-      ['record', '-t', 'V2', '-b', 'second', '-T', 'api', '-X', 'clitest-DEC-0001'],
-      { cwd: dir },
-    );
+    await runOk(['record', '-t', 'V2', '-b', 'second', '-T', 'api', '-X', 'clitest-DEC-0001'], {
+      cwd: dir,
+    });
 
     const histOut = await runOk(['history', 'clitest-DEC-0001'], { cwd: dir });
     expect(histOut).toContain('clitest-DEC-0001');

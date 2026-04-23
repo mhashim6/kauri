@@ -8,7 +8,7 @@ import { handleError, printJson, printText } from '../output.ts';
 export function registerUpdate(program: Command): void {
   program
     .command('update <id>')
-    .description('Edit a record\'s mutable fields')
+    .description("Edit a record's mutable fields")
     .option('-t, --title <title>', 'New title')
     .option('-b, --body <body>', 'New body (use "-" for stdin)')
     .option('-f, --body-file <path>', 'Read body from file')
@@ -48,7 +48,12 @@ export function registerUpdate(program: Command): void {
           allowNewTags: opts['allowNewTags'] === true,
         });
         if (json) {
-          printJson({ id: result.record.id, revision: result.record.revision, lastModified: result.record.lastModified, warnings: result.warnings });
+          printJson({
+            id: result.record.id,
+            revision: result.record.revision,
+            lastModified: result.record.lastModified,
+            warnings: result.warnings,
+          });
         } else {
           printText(`Updated ${result.record.id} (revision ${result.record.revision})`);
           for (const w of result.warnings) printText(`  warning: ${w.message}`);

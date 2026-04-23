@@ -6,12 +6,12 @@ validate decisions as first-class MCP tools.
 
 ## What it does
 
-| Feature | How |
-|---|---|
-| **Decisions in context** | Session-start hook injects the Kauri projection (pinned + index) into Claude's context automatically |
-| **MCP tools** | Claude sees `kauri_record`, `kauri_query`, `kauri_show`, etc. alongside Bash/Read/Edit |
-| **Skills** | `/kauri:record-decision` and `/kauri:check-staleness` teach Claude when and how to use Kauri |
-| **Post-commit staleness** | After `git commit`, a hook checks for stale decisions and alerts Claude |
+| Feature                   | How                                                                                                  |
+| ------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Decisions in context**  | Session-start hook injects the Kauri projection (pinned + index) into Claude's context automatically |
+| **MCP tools**             | Claude sees `kauri_record`, `kauri_query`, `kauri_show`, etc. alongside Bash/Read/Edit               |
+| **Skills**                | `/kauri:record-decision` and `/kauri:check-staleness` teach Claude when and how to use Kauri         |
+| **Post-commit staleness** | After `git commit`, a hook checks for stale decisions and alerts Claude                              |
 
 ## Prerequisites
 
@@ -75,22 +75,23 @@ automatically and exposes all 12 Kauri tools:
 
 ### Hooks
 
-| Event | Trigger | Action |
-|---|---|---|
-| `SessionStart` (startup) | New session begins | Injects decision projection into context |
+| Event                    | Trigger              | Action                                                |
+| ------------------------ | -------------------- | ----------------------------------------------------- |
+| `SessionStart` (startup) | New session begins   | Injects decision projection into context              |
 | `SessionStart` (compact) | Context is compacted | Re-injects projection so decisions survive compaction |
-| `PostToolUse` (Bash) | After a `git commit` | Runs staleness check, alerts if records are stale |
+| `PostToolUse` (Bash)     | After a `git commit` | Runs staleness check, alerts if records are stale     |
 
 ### Skills
 
-| Skill | Invocation | Purpose |
-|---|---|---|
+| Skill           | Invocation                       | Purpose                                      |
+| --------------- | -------------------------------- | -------------------------------------------- |
 | record-decision | `/kauri:record-decision [title]` | Guided workflow for recording a new decision |
-| check-staleness | `/kauri:check-staleness` | Review and resolve stale decisions |
+| check-staleness | `/kauri:check-staleness`         | Review and resolve stale decisions           |
 
 ## Troubleshooting
 
 **"kauri: command not found"** — The `kauri` binary isn't in PATH. Either:
+
 - Run `bun run build` in the Kauri repo and add `dist/` to your PATH
 - Or use `bun run /path/to/kauri/src/cli.ts` and update `.mcp.json` accordingly
 
@@ -98,7 +99,9 @@ automatically and exposes all 12 Kauri tools:
 in your project directory and have at least one recorded decision.
 
 **MCP tools not appearing** — Check that the plugin is loaded:
+
 ```
 /reload-plugins
 ```
+
 Then verify with `/kauri:check-staleness` — if the skill loads, the plugin is active.

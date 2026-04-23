@@ -349,11 +349,7 @@ export class RecordsRepo {
    * link (`supersedes`) on the new record is set at insert time by
    * the caller via `NewRecordInput.supersedes`.
    */
-  public linkSupersession(
-    supersededId: string,
-    supersedingId: string,
-    lastModified: string,
-  ): void {
+  public linkSupersession(supersededId: string, supersedingId: string, lastModified: string): void {
     const result = this.linkSupersessionStmt.run(supersedingId, lastModified, supersededId);
     if (result.changes === 0) {
       throw new KauriError('not_found', `record '${supersededId}' does not exist`, {
@@ -514,9 +510,7 @@ function buildWhere(filter: QueryFilter): BuiltWhere {
   // Tags filter (OR semantics).
   if (filter.tags !== undefined && filter.tags.length > 0) {
     const placeholders = filter.tags.map(() => '?').join(', ');
-    where.push(
-      `records.id IN (SELECT record_id FROM record_tags WHERE tag IN (${placeholders}))`,
-    );
+    where.push(`records.id IN (SELECT record_id FROM record_tags WHERE tag IN (${placeholders}))`);
     params.push(...filter.tags);
   }
 
@@ -533,9 +527,7 @@ function buildWhere(filter: QueryFilter): BuiltWhere {
   if (filter.text !== undefined && filter.text.trim().length > 0) {
     const ftsExpr = buildFtsMatchQuery(filter.text);
     if (ftsExpr.length > 0) {
-      where.push(
-        'records.rowid IN (SELECT rowid FROM records_fts WHERE records_fts MATCH ?)',
-      );
+      where.push('records.rowid IN (SELECT rowid FROM records_fts WHERE records_fts MATCH ?)');
       params.push(ftsExpr);
     }
   }

@@ -53,7 +53,10 @@ export class McpTestClient {
     const id = this.nextId++;
     const msg = JSON.stringify({ jsonrpc: '2.0', id, method, params }) + '\n';
     // Bun's stdin with 'pipe' is a FileSink.
-    const stdin = this.proc.stdin as unknown as { write(data: string | Uint8Array): number; flush(): void };
+    const stdin = this.proc.stdin as unknown as {
+      write(data: string | Uint8Array): number;
+      flush(): void;
+    };
     stdin.write(msg);
     stdin.flush();
 
@@ -81,7 +84,10 @@ export class McpTestClient {
 
   notify(method: string, params: unknown): void {
     const msg = JSON.stringify({ jsonrpc: '2.0', method, params }) + '\n';
-    const stdin = this.proc.stdin as unknown as { write(data: string | Uint8Array): number; flush(): void };
+    const stdin = this.proc.stdin as unknown as {
+      write(data: string | Uint8Array): number;
+      flush(): void;
+    };
     stdin.write(msg);
     stdin.flush();
   }

@@ -176,9 +176,9 @@ describe('updateRecord', () => {
   });
 
   test('throws not_found for unknown ID', () => {
-    expect(() =>
-      updateRecord(ctx, { id: 'kauri-DEC-9999', source: 's', title: 'x' }),
-    ).toThrow(KauriError);
+    expect(() => updateRecord(ctx, { id: 'kauri-DEC-9999', source: 's', title: 'x' })).toThrow(
+      KauriError,
+    );
   });
 });
 

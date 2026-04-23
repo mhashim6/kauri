@@ -37,9 +37,7 @@ export class FilesRepo {
     this.listStmt = db.query<RecordFileRow, [string]>(
       'SELECT record_id, path, mtime, size, sha256 FROM record_files WHERE record_id = ? ORDER BY path ASC',
     );
-    this.clearStmt = db.query<unknown, [string]>(
-      'DELETE FROM record_files WHERE record_id = ?',
-    );
+    this.clearStmt = db.query<unknown, [string]>('DELETE FROM record_files WHERE record_id = ?');
     this.insertStmt = db.query<unknown, [string, string, number, number, string | null]>(
       'INSERT INTO record_files(record_id, path, mtime, size, sha256) VALUES (?, ?, ?, ?, ?)',
     );

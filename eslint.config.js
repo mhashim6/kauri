@@ -26,12 +26,7 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 export default [
   js.configs.recommended,
   {
-    ignores: [
-      'node_modules/**',
-      'dist/**',
-      'coverage/**',
-      'src/store/migrations-data.ts',
-    ],
+    ignores: ['node_modules/**', 'dist/**', 'coverage/**', 'src/store/migrations-data.ts'],
   },
   {
     files: ['**/*.ts'],

@@ -24,7 +24,13 @@ export function registerQuery(program: Command): void {
           ctx,
           {
             tags: opts['tag'] as string[] | undefined,
-            status: (opts['status'] as string | undefined) as 'active' | 'draft' | 'superseded' | 'deprecated' | 'any' | undefined,
+            status: opts['status'] as string | undefined as
+              | 'active'
+              | 'draft'
+              | 'superseded'
+              | 'deprecated'
+              | 'any'
+              | undefined,
             files: opts['file'] as string[] | undefined,
             text: opts['text'] as string | undefined,
             since: opts['since'] as string | undefined,

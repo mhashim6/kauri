@@ -80,11 +80,7 @@ export interface RenamedId {
  * Precondition: all three files must be valid Kauri stores (migrated
  * to the same schema version).
  */
-export function mergeStores(
-  basePath: string,
-  oursPath: string,
-  theirsPath: string,
-): MergeResult {
+export function mergeStores(basePath: string, oursPath: string, theirsPath: string): MergeResult {
   // Open all three databases read-write. Even though we only READ from
   // base and theirs, we can't use readonly because the .db files carry
   // a WAL journal_mode header from their original store. SQLite in
@@ -272,9 +268,7 @@ function nextAvailableId(target: Database, rec: RecordRow): string {
   const prefix = rec.id.slice(0, lastDash); // e.g. "merge-test-DEC"
 
   // Find the max counter for this prefix pattern.
-  const rows = target
-    .query<{ id: string }, []>('SELECT id FROM records')
-    .all();
+  const rows = target.query<{ id: string }, []>('SELECT id FROM records').all();
   let max = 0;
   for (const row of rows) {
     const rowLastDash = row.id.lastIndexOf('-');
@@ -319,9 +313,10 @@ function replaceRecordTags(source: Database, target: Database, recordId: string)
 
 function copyRecordFiles(source: Database, target: Database, recordId: string): void {
   const rows = source
-    .query<FileRow, [string]>(
-      'SELECT record_id, path, mtime, size, sha256 FROM record_files WHERE record_id = ?',
-    )
+    .query<
+      FileRow,
+      [string]
+    >('SELECT record_id, path, mtime, size, sha256 FROM record_files WHERE record_id = ?')
     .all(recordId);
   for (const row of rows) {
     target
@@ -362,9 +357,10 @@ function copyRecordFilesRenamed(
   targetRecordId: string,
 ): void {
   const rows = source
-    .query<FileRow, [string]>(
-      'SELECT record_id, path, mtime, size, sha256 FROM record_files WHERE record_id = ?',
-    )
+    .query<
+      FileRow,
+      [string]
+    >('SELECT record_id, path, mtime, size, sha256 FROM record_files WHERE record_id = ?')
     .all(sourceRecordId);
   for (const row of rows) {
     target
@@ -381,9 +377,10 @@ function copyRecordFilesRenamed(
 
 function copyRecordLinks(source: Database, target: Database, recordId: string): void {
   const rows = source
-    .query<LinkRow, [string]>(
-      'SELECT from_record_id, to_record_id FROM record_links WHERE from_record_id = ?',
-    )
+    .query<
+      LinkRow,
+      [string]
+    >('SELECT from_record_id, to_record_id FROM record_links WHERE from_record_id = ?')
     .all(recordId);
   for (const row of rows) {
     target
@@ -404,9 +401,10 @@ function copyRecordLinksRenamed(
   targetRecordId: string,
 ): void {
   const rows = source
-    .query<LinkRow, [string]>(
-      'SELECT from_record_id, to_record_id FROM record_links WHERE from_record_id = ?',
-    )
+    .query<
+      LinkRow,
+      [string]
+    >('SELECT from_record_id, to_record_id FROM record_links WHERE from_record_id = ?')
     .all(sourceRecordId);
   for (const row of rows) {
     target

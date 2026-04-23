@@ -45,9 +45,7 @@ async function discover(): Promise<DiscoveredMigration[]> {
   for (const filename of filenames) {
     const match = /^(\d{4})_(.+)\.sql$/.exec(filename);
     if (match === null) {
-      throw new Error(
-        `migration filename ${filename} does not match '<NNNN>_<name>.sql' shape`,
-      );
+      throw new Error(`migration filename ${filename} does not match '<NNNN>_<name>.sql' shape`);
     }
     const version = Number.parseInt(match[1] as string, 10);
     out.push({
@@ -83,9 +81,7 @@ function render(entries: readonly DiscoveredMigration[]): string {
   ];
   for (const e of entries) {
     const importName = `sql${e.version.toString().padStart(4, '0')}`;
-    lines.push(
-      `import ${importName} from '../../migrations/${e.filename}' with { type: 'text' };`,
-    );
+    lines.push(`import ${importName} from '../../migrations/${e.filename}' with { type: 'text' };`);
   }
   lines.push('');
   lines.push('export interface Migration {');
@@ -97,9 +93,7 @@ function render(entries: readonly DiscoveredMigration[]): string {
   lines.push('export const MIGRATIONS: readonly Migration[] = [');
   for (const e of entries) {
     const importName = `sql${e.version.toString().padStart(4, '0')}`;
-    lines.push(
-      `  { version: ${e.version}, name: '${e.baseName}', sql: ${importName} },`,
-    );
+    lines.push(`  { version: ${e.version}, name: '${e.baseName}', sql: ${importName} },`);
   }
   lines.push('];');
   lines.push('');

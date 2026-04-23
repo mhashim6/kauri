@@ -14,7 +14,12 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { KauriError } from '../../src/core/errors.ts';
-import { currentVersion, ensureMigrated, latestVersion, loadMigrations } from '../../src/store/migrations.ts';
+import {
+  currentVersion,
+  ensureMigrated,
+  latestVersion,
+  loadMigrations,
+} from '../../src/store/migrations.ts';
 import { Store } from '../../src/store/store.ts';
 import { makeTmpStore, type TmpStore } from '../helpers/tmp-store.ts';
 
@@ -34,9 +39,7 @@ describe('Store.openAt + migration 0001', () => {
   });
 
   test('creates the records table with expected columns', () => {
-    const cols = tmp.store.db
-      .query<{ name: string }, []>("PRAGMA table_info('records')")
-      .all();
+    const cols = tmp.store.db.query<{ name: string }, []>("PRAGMA table_info('records')").all();
     const names = cols.map((c) => c.name).sort();
     expect(names).toEqual(
       [
@@ -85,7 +88,14 @@ describe('Store.openAt + migration 0001', () => {
       .map((r) => r.name)
       .sort();
     expect(indexes).toEqual(
-      ['idx_records_status', 'idx_records_kind', 'idx_records_pinned', 'idx_record_tags_tag', 'idx_record_files_path', 'idx_record_links_to'].sort(),
+      [
+        'idx_records_status',
+        'idx_records_kind',
+        'idx_records_pinned',
+        'idx_record_tags_tag',
+        'idx_record_files_path',
+        'idx_record_links_to',
+      ].sort(),
     );
   });
 
@@ -210,9 +220,7 @@ describe('Store.openAt — on-disk', () => {
   });
 
   test('enables WAL journal mode', () => {
-    const row = tmp.store.db
-      .query<{ journal_mode: string }, []>('PRAGMA journal_mode')
-      .get();
+    const row = tmp.store.db.query<{ journal_mode: string }, []>('PRAGMA journal_mode').get();
     expect(row?.journal_mode).toBe('wal');
   });
 
@@ -271,9 +279,10 @@ describe('ensureMigrated — rollback on failure', () => {
     // were committed in a separate transaction, so the rollback of
     // the failed re-run can't touch them.
     const tables = tmp.store.db
-      .query<{ name: string }, []>(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name='records'",
-      )
+      .query<
+        { name: string },
+        []
+      >("SELECT name FROM sqlite_master WHERE type='table' AND name='records'")
       .all();
     expect(tables).toHaveLength(1);
   });
@@ -312,9 +321,7 @@ describe('Store.tx', () => {
 
   test('commits successful transactions', () => {
     tmp.store.tx(() => {
-      tmp.store.db.exec(
-        `INSERT INTO meta(key, value) VALUES ('test_commit', 'yes')`,
-      );
+      tmp.store.db.exec(`INSERT INTO meta(key, value) VALUES ('test_commit', 'yes')`);
     });
     const row = tmp.store.db
       .query<{ value: string }, [string]>('SELECT value FROM meta WHERE key = ?')
@@ -325,9 +332,7 @@ describe('Store.tx', () => {
   test('rolls back transactions that throw', () => {
     expect(() =>
       tmp.store.tx(() => {
-        tmp.store.db.exec(
-          `INSERT INTO meta(key, value) VALUES ('test_rollback', 'yes')`,
-        );
+        tmp.store.db.exec(`INSERT INTO meta(key, value) VALUES ('test_rollback', 'yes')`);
         throw new Error('intentional');
       }),
     ).toThrow('intentional');
@@ -350,9 +355,7 @@ describe('Store.tx', () => {
 describe('Store.exec', () => {
   test('runs raw SQL against the underlying connection', () => {
     tmp = makeTmpStore();
-    tmp.store.exec(
-      `INSERT INTO meta(key, value) VALUES ('exec_test', 'present')`,
-    );
+    tmp.store.exec(`INSERT INTO meta(key, value) VALUES ('exec_test', 'present')`);
     const row = tmp.store.db
       .query<{ value: string }, [string]>('SELECT value FROM meta WHERE key = ?')
       .get('exec_test');

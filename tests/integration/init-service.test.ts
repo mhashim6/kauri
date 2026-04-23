@@ -88,9 +88,9 @@ describe('initStore', () => {
     const dir = tmpDir();
     const storePath = join(dir, '.kauri', 'store.db');
     initStore({ storePath, scope: 'project', slug: 'kauri', clock });
-    expect(() =>
-      initStore({ storePath, scope: 'project', slug: 'kauri', clock }),
-    ).toThrow(KauriError);
+    expect(() => initStore({ storePath, scope: 'project', slug: 'kauri', clock })).toThrow(
+      KauriError,
+    );
   });
 
   test('refuses reserved slugs', () => {

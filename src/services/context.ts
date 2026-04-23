@@ -100,8 +100,7 @@ export function bundlesForRead(ctx: ServiceContext, scope: ScopeQuery): readonly
  * the target scope is not available.
  */
 export function bundleForWrite(ctx: ServiceContext, scope?: Scope): StoreBundle {
-  const effective: Scope =
-    scope ?? (ctx.projectBundle !== null ? 'project' : 'user');
+  const effective: Scope = scope ?? (ctx.projectBundle !== null ? 'project' : 'user');
   if (effective === 'project') {
     if (ctx.projectBundle === null) {
       throw new KauriError(

@@ -86,11 +86,7 @@ describe('FilesRepo — replace', () => {
 
   test('deduplicates by path (last writer wins for the same path)', () => {
     insertBareRecord('kauri-DEC-0001');
-    files.replace('kauri-DEC-0001', [
-      fa('a.ts', 1, 10),
-      fa('a.ts', 2, 20),
-      fa('a.ts', 3, 30),
-    ]);
+    files.replace('kauri-DEC-0001', [fa('a.ts', 1, 10), fa('a.ts', 2, 20), fa('a.ts', 3, 30)]);
     const out = files.list('kauri-DEC-0001');
     expect(out).toHaveLength(1);
     expect(out[0]?.mtime).toBe(3);
@@ -123,14 +119,8 @@ describe('FilesRepo — idsByPath', () => {
     files.replace('kauri-DEC-0001', [fa('shared.ts', 1, 1)]);
     files.replace('kauri-DEC-0002', [fa('shared.ts', 1, 1), fa('other.ts', 1, 1)]);
     files.replace('kauri-DEC-0003', [fa('other.ts', 1, 1)]);
-    expect([...files.idsByPath('shared.ts')].sort()).toEqual([
-      'kauri-DEC-0001',
-      'kauri-DEC-0002',
-    ]);
-    expect([...files.idsByPath('other.ts')].sort()).toEqual([
-      'kauri-DEC-0002',
-      'kauri-DEC-0003',
-    ]);
+    expect([...files.idsByPath('shared.ts')].sort()).toEqual(['kauri-DEC-0001', 'kauri-DEC-0002']);
+    expect([...files.idsByPath('other.ts')].sort()).toEqual(['kauri-DEC-0002', 'kauri-DEC-0003']);
   });
 
   test('returns empty for unknown path', () => {

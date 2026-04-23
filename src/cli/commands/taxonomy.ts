@@ -5,9 +5,7 @@ import { isJsonMode, openContext, parseScopeRead, parseScopeWrite } from '../mai
 import { handleError, printJson, printText } from '../output.ts';
 
 export function registerTaxonomy(program: Command): void {
-  const tax = program
-    .command('taxonomy')
-    .description('List or manage the tag taxonomy');
+  const tax = program.command('taxonomy').description('List or manage the tag taxonomy');
 
   // Default action (no subcommand) = list.
   tax
@@ -42,7 +40,12 @@ export function registerTaxonomy(program: Command): void {
       const json = isJsonMode(cmd);
       const { ctx, cleanup } = openContext();
       try {
-        const added = addTag(ctx, tag, parseScopeWrite(opts['scope'] as string | undefined), ctx.clock);
+        const added = addTag(
+          ctx,
+          tag,
+          parseScopeWrite(opts['scope'] as string | undefined),
+          ctx.clock,
+        );
         if (json) {
           printJson({ tag, added });
         } else {

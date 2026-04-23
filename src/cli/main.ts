@@ -68,9 +68,7 @@ export function buildProgram(): Command {
  * Each command that needs a context calls this in its action handler.
  * The returned `cleanup` function must be called to close the stores.
  */
-export function openContext(
-  _scopeHint?: ScopeQuery,
-): { ctx: ServiceContext; cleanup: () => void } {
+export function openContext(_scopeHint?: ScopeQuery): { ctx: ServiceContext; cleanup: () => void } {
   const stores: Store[] = [];
 
   // Project store: walk upward from cwd.

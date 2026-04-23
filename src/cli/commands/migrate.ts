@@ -22,7 +22,11 @@ export function registerMigrate(program: Command): void {
         const current = currentVersion(store.db);
         const latest = latestVersion();
         if (json) {
-          printJson({ currentVersion: current, latestVersion: latest, upToDate: current === latest });
+          printJson({
+            currentVersion: current,
+            latestVersion: latest,
+            upToDate: current === latest,
+          });
         } else {
           if (current === latest) {
             printText(`Schema is up to date (version ${current}).`);

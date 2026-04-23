@@ -66,9 +66,7 @@ export function createRecord(ctx: ServiceContext, input: CreateInput): CreateRes
   const warnings: Warning[] = [];
 
   // Probe files BEFORE entering the transaction.
-  const fileAssocs = input.files?.length
-    ? probeFiles(input.files, ctx.fsProbe, warnings)
-    : [];
+  const fileAssocs = input.files?.length ? probeFiles(input.files, ctx.fsProbe, warnings) : [];
 
   return bundle.store.tx(() => {
     // Tags: normalise, validate against taxonomy, optionally add new.
@@ -158,9 +156,8 @@ export function updateRecord(ctx: ServiceContext, input: UpdateInput): UpdateRes
   const warnings: Warning[] = [];
 
   // Probe files before the transaction.
-  const fileAssocs = input.files !== undefined
-    ? probeFiles(input.files, ctx.fsProbe, warnings)
-    : null;
+  const fileAssocs =
+    input.files !== undefined ? probeFiles(input.files, ctx.fsProbe, warnings) : null;
 
   return bundle.store.tx(() => {
     const existing = bundle.records.findById(input.id);
@@ -367,11 +364,7 @@ function validateLinkTargets(bundle: StoreBundle, linkedIds: readonly string[]):
  * so callers can use the results inside a SQLite transaction without
  * awaiting. Only files under the size cap are hashed.
  */
-function probeFiles(
-  paths: readonly string[],
-  probe: FsProbe,
-  warnings: Warning[],
-): FileAssoc[] {
+function probeFiles(paths: readonly string[], probe: FsProbe, warnings: Warning[]): FileAssoc[] {
   const assocs: FileAssoc[] = [];
   for (const p of paths) {
     const stat = probe.stat(p);

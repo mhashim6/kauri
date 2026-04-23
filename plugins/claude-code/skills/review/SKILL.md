@@ -4,7 +4,7 @@ description: Review recent code changes against Kauri decisions. Use after imple
 disable-model-invocation: false
 user-invocable: true
 allowed-tools: Bash(git diff *) Bash(git log *) mcp__kauri__kauri_query mcp__kauri__kauri_show mcp__kauri__kauri_validate Read
-argument-hint: "[file or commit range]"
+argument-hint: '[file or commit range]'
 ---
 
 # Review Changes Against Decisions

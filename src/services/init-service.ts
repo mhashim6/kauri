@@ -56,10 +56,7 @@ export function initStore(input: InitInput): InitResult {
   }
 
   const scope = input.scope;
-  const slug =
-    scope === 'project'
-      ? normalizeSlug(input.slug ?? '')
-      : 'usr';
+  const slug = scope === 'project' ? normalizeSlug(input.slug ?? '') : 'usr';
 
   const now = input.clock.nowIso();
   const store = Store.openAt(input.storePath, scope);

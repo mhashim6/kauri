@@ -4,7 +4,7 @@ description: Record a project decision using Kauri. Use when you've chosen an ar
 disable-model-invocation: false
 user-invocable: true
 allowed-tools: mcp__kauri__kauri_record mcp__kauri__kauri_taxonomy_list mcp__kauri__kauri_query
-argument-hint: "[title of the decision]"
+argument-hint: '[title of the decision]'
 ---
 
 # Record a Decision
@@ -19,6 +19,7 @@ You are recording a project decision using Kauri. The decision should be a delib
 ## Recording the decision
 
 Use `kauri_record` with:
+
 - **title**: A short, scannable title (the user provided: "$ARGUMENTS")
 - **body**: The full rationale in markdown. Include:
   - What was decided
@@ -33,7 +34,7 @@ Use `kauri_record` with:
 
 - Trivial implementation details (variable names, formatting)
 - Temporary workarounds intended to be removed immediately
-- Facts or observations (decisions are *choices*, not notes)
+- Facts or observations (decisions are _choices_, not notes)
 
 ## After recording
 

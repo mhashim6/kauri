@@ -110,9 +110,7 @@ export class RecordTagsRepo {
     this.tagsForStmt = db.query<TagRow, [string]>(
       'SELECT tag FROM record_tags WHERE record_id = ? ORDER BY tag ASC',
     );
-    this.clearStmt = db.query<unknown, [string]>(
-      'DELETE FROM record_tags WHERE record_id = ?',
-    );
+    this.clearStmt = db.query<unknown, [string]>('DELETE FROM record_tags WHERE record_id = ?');
     this.insertStmt = db.query<unknown, [string, string]>(
       'INSERT INTO record_tags(record_id, tag) VALUES (?, ?)',
     );

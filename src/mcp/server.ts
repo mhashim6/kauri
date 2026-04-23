@@ -69,7 +69,12 @@ export async function startMcpServer(ctx: ServiceContext): Promise<void> {
         allowNewTags: args.allow_new_tags,
         scope: args.scope,
       });
-      return toolResult({ id: result.record.id, status: result.record.status, created: result.record.created, warnings: result.warnings });
+      return toolResult({
+        id: result.record.id,
+        status: result.record.status,
+        created: result.record.created,
+        warnings: result.warnings,
+      });
     },
   );
 
@@ -101,7 +106,12 @@ export async function startMcpServer(ctx: ServiceContext): Promise<void> {
         pinned: args.pinned,
         allowNewTags: args.allow_new_tags,
       });
-      return toolResult({ id: result.record.id, revision: result.record.revision, lastModified: result.record.lastModified, warnings: result.warnings });
+      return toolResult({
+        id: result.record.id,
+        revision: result.record.revision,
+        lastModified: result.record.lastModified,
+        warnings: result.warnings,
+      });
     },
   );
 
@@ -111,7 +121,10 @@ export async function startMcpServer(ctx: ServiceContext): Promise<void> {
     {
       source: z.string().describe('Source attribution'),
       tags: z.array(z.string()).optional().describe('Filter by tags'),
-      status: z.enum(['draft', 'active', 'superseded', 'deprecated', 'any']).optional().describe('Filter by status'),
+      status: z
+        .enum(['draft', 'active', 'superseded', 'deprecated', 'any'])
+        .optional()
+        .describe('Filter by status'),
       files: z.array(z.string()).optional().describe('Filter by associated file'),
       text: z.string().optional().describe('Full-text search query'),
       since: z.string().optional().describe('Created on or after (ISO 8601)'),
@@ -122,10 +135,23 @@ export async function startMcpServer(ctx: ServiceContext): Promise<void> {
     async (args) => {
       const result = queryRecords(
         ctx,
-        { tags: args.tags, status: args.status, files: args.files, text: args.text, since: args.since, limit: args.limit, offset: args.offset },
+        {
+          tags: args.tags,
+          status: args.status,
+          files: args.files,
+          text: args.text,
+          since: args.since,
+          limit: args.limit,
+          offset: args.offset,
+        },
         args.scope ?? 'both',
       );
-      return toolResult({ records: result.records, total: result.total, limit: args.limit ?? 100, offset: args.offset ?? 0 });
+      return toolResult({
+        records: result.records,
+        total: result.total,
+        limit: args.limit ?? 100,
+        offset: args.offset ?? 0,
+      });
     },
   );
 
@@ -165,7 +191,11 @@ export async function startMcpServer(ctx: ServiceContext): Promise<void> {
     },
     async (args) => {
       const result = validateRecord(ctx, args.id, args.verdict, args.source);
-      return toolResult({ id: result.record.id, status: result.record.status, lastValidated: result.record.lastValidated });
+      return toolResult({
+        id: result.record.id,
+        status: result.record.status,
+        lastValidated: result.record.lastValidated,
+      });
     },
   );
 
@@ -202,7 +232,12 @@ export async function startMcpServer(ctx: ServiceContext): Promise<void> {
     },
     async (args) => {
       const result = pinRecord(ctx, args.id, args.source);
-      return toolResult({ id: result.record.id, pinned: true, pinnedCount: result.pinnedCount, warnings: result.warnings });
+      return toolResult({
+        id: result.record.id,
+        pinned: true,
+        pinnedCount: result.pinnedCount,
+        warnings: result.warnings,
+      });
     },
   );
 
@@ -215,7 +250,12 @@ export async function startMcpServer(ctx: ServiceContext): Promise<void> {
     },
     async (args) => {
       const result = unpinRecord(ctx, args.id, args.source);
-      return toolResult({ id: result.record.id, pinned: false, pinnedCount: result.pinnedCount, warnings: result.warnings });
+      return toolResult({
+        id: result.record.id,
+        pinned: false,
+        pinnedCount: result.pinnedCount,
+        warnings: result.warnings,
+      });
     },
   );
 

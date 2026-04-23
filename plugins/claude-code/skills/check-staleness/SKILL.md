@@ -4,7 +4,7 @@ description: Check if recorded Kauri decisions are stale. Use when assessing cod
 disable-model-invocation: false
 user-invocable: true
 allowed-tools: mcp__kauri__kauri_check mcp__kauri__kauri_show mcp__kauri__kauri_validate
-argument-hint: ""
+argument-hint: ''
 ---
 
 # Check Decision Staleness
@@ -28,6 +28,7 @@ Run a staleness check on all active Kauri decisions and help the user resolve an
 ## What "stale" means
 
 A record is stale when:
+
 - **Time-based**: More than `ttl_days` have passed since last validation (default 90 days).
 - **File-based**: A file associated with the record has changed content since the last validation.
 

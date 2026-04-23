@@ -7,10 +7,7 @@ import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
 import { KauriError } from '../../src/core/errors.ts';
 import { FilesRepo } from '../../src/store/repo/files.ts';
 import { RecordLinksRepo } from '../../src/store/repo/links.ts';
-import {
-  type NewRecordInput,
-  RecordsRepo,
-} from '../../src/store/repo/records.ts';
+import { type NewRecordInput, RecordsRepo } from '../../src/store/repo/records.ts';
 import { RecordTagsRepo, TaxonomyRepo } from '../../src/store/repo/tags.ts';
 import { makeTmpStore, type TmpStore } from '../helpers/tmp-store.ts';
 
@@ -280,11 +277,7 @@ describe('query — pagination', () => {
 
   test('default order is created DESC (newest first)', () => {
     const result = records.query({ limit: 3 });
-    expect(result.records.map((r) => r.title)).toEqual([
-      'record 11',
-      'record 10',
-      'record 9',
-    ]);
+    expect(result.records.map((r) => r.title)).toEqual(['record 11', 'record 10', 'record 9']);
   });
 
   test('total is the unpaged count', () => {

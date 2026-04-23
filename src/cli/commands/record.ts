@@ -44,7 +44,12 @@ export function registerRecord(program: Command): void {
           scope: parseScopeWrite(opts['scope'] as string | undefined),
         });
         if (json) {
-          printJson({ id: result.record.id, status: result.record.status, created: result.record.created, warnings: result.warnings });
+          printJson({
+            id: result.record.id,
+            status: result.record.status,
+            created: result.record.created,
+            warnings: result.warnings,
+          });
         } else {
           printText(`Created ${result.record.id} (${result.record.status})`);
           for (const w of result.warnings) {

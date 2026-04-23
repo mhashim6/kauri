@@ -37,10 +37,10 @@ async function main(): Promise<void> {
   // Bun.build produces a JS bundle, not a compiled binary.
   // For the standalone binary, we need `bun build --compile`.
   // Bun.build() API doesn't support --compile yet, so we shell out.
-  const proc = Bun.spawn(
-    ['bun', 'build', '--compile', '--minify', '--outfile', OUTFILE, ENTRY],
-    { cwd: ROOT, stdio: ['inherit', 'inherit', 'inherit'] },
-  );
+  const proc = Bun.spawn(['bun', 'build', '--compile', '--minify', '--outfile', OUTFILE, ENTRY], {
+    cwd: ROOT,
+    stdio: ['inherit', 'inherit', 'inherit'],
+  });
   const exitCode = await proc.exited;
 
   if (exitCode !== 0) {

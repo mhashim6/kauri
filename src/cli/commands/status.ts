@@ -44,7 +44,9 @@ export function registerStatus(program: Command): void {
         if (json) {
           printJson(summary);
         } else {
-          printText(`Active: ${active}  Draft: ${draft}  Superseded: ${superseded}  Deprecated: ${deprecated}`);
+          printText(
+            `Active: ${active}  Draft: ${draft}  Superseded: ${superseded}  Deprecated: ${deprecated}`,
+          );
           printText(`Pinned: ${pinned}  Stale: ${summary.stale}  Tags: ${summary.taxonomySize}`);
         }
       } catch (err) {

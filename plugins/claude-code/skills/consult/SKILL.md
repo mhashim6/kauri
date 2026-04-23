@@ -4,7 +4,7 @@ description: Consult existing Kauri decisions before planning or implementing ch
 disable-model-invocation: false
 user-invocable: true
 allowed-tools: mcp__kauri__kauri_query mcp__kauri__kauri_show mcp__kauri__kauri_taxonomy_list
-argument-hint: "[topic or file path]"
+argument-hint: '[topic or file path]'
 ---
 
 # Consult Existing Decisions

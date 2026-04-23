@@ -97,9 +97,7 @@ function buildTextBlocks(input: ProjectionInput): string[] {
     } else {
       // Index entries collapse into a single block so the bullet list
       // renders contiguously without blank lines between items.
-      const lines = input.indexed.map((rec) =>
-        renderIndexEntry(rec, input.staleIds.has(rec.id)),
-      );
+      const lines = input.indexed.map((rec) => renderIndexEntry(rec, input.staleIds.has(rec.id)));
       blocks.push(lines.join('\n'));
     }
   }
@@ -117,9 +115,7 @@ function renderTitle(input: ProjectionInput): string {
 
 function renderIndexHeader(input: ProjectionInput): string {
   const label =
-    input.pinned.length > 0
-      ? `${input.indexed.length} more`
-      : `${input.indexed.length} records`;
+    input.pinned.length > 0 ? `${input.indexed.length} more` : `${input.indexed.length} records`;
   return `## Index (${label} — use \`kauri_show\` or \`kauri_query\` to fetch)`;
 }
 
@@ -206,9 +202,7 @@ export interface ProjectionJson {
 export function renderJson(input: ProjectionInput): ProjectionJson {
   const pinned = input.pinned.map((r) => toFullJson(r, input.staleIds.has(r.id)));
   const indexed = input.indexed.map((r) =>
-    input.full
-      ? toFullJson(r, input.staleIds.has(r.id))
-      : toIndexJson(r, input.staleIds.has(r.id)),
+    input.full ? toFullJson(r, input.staleIds.has(r.id)) : toIndexJson(r, input.staleIds.has(r.id)),
   );
   return {
     slugLabel: input.slugLabel,

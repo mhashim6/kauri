@@ -1,10 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import {
-  type ProjectionInput,
-  renderJson,
-  renderText,
-} from '../../src/core/projection.ts';
+import { type ProjectionInput, renderJson, renderText } from '../../src/core/projection.ts';
 import type { FileAssoc, KauriRecord } from '../../src/core/types.ts';
 
 // ---------------------------------------------------------------------------
@@ -65,9 +61,7 @@ describe('renderText — title', () => {
   });
 
   test('omits drafts count when includeDrafts is false', () => {
-    const out = renderText(
-      emptyInput({ counts: { active: 47, pinned: 3, drafts: 5 } }),
-    );
+    const out = renderText(emptyInput({ counts: { active: 47, pinned: 3, drafts: 5 } }));
     expect(out).not.toContain('drafts');
   });
 
@@ -188,14 +182,26 @@ describe('renderText — pinned section', () => {
 describe('renderText — index section', () => {
   test('renders one-liner per indexed record', () => {
     const recs = [
-      makeRecord({ id: 'kauri-DEC-0001', title: 'Monorepo with pnpm workspaces', tags: ['architecture'] }),
-      makeRecord({ id: 'kauri-DEC-0002', title: 'All API responses use camelCase', tags: ['convention'] }),
+      makeRecord({
+        id: 'kauri-DEC-0001',
+        title: 'Monorepo with pnpm workspaces',
+        tags: ['architecture'],
+      }),
+      makeRecord({
+        id: 'kauri-DEC-0002',
+        title: 'All API responses use camelCase',
+        tags: ['convention'],
+      }),
     ];
     const out = renderText(
       emptyInput({ counts: { active: 2, pinned: 0, drafts: 0 }, indexed: recs }),
     );
-    expect(out).toContain('- [kauri-DEC-0001] project | architecture | Monorepo with pnpm workspaces');
-    expect(out).toContain('- [kauri-DEC-0002] project | convention | All API responses use camelCase');
+    expect(out).toContain(
+      '- [kauri-DEC-0001] project | architecture | Monorepo with pnpm workspaces',
+    );
+    expect(out).toContain(
+      '- [kauri-DEC-0002] project | convention | All API responses use camelCase',
+    );
   });
 
   test('header uses "N more" wording when pinned section is present', () => {
@@ -217,17 +223,13 @@ describe('renderText — index section', () => {
       makeRecord({ id: 'kauri-DEC-0002', title: 'B' }),
       makeRecord({ id: 'kauri-DEC-0003', title: 'C' }),
     ];
-    const out = renderText(
-      emptyInput({ counts: { active: 3, pinned: 0, drafts: 0 }, indexed }),
-    );
+    const out = renderText(emptyInput({ counts: { active: 3, pinned: 0, drafts: 0 }, indexed }));
     expect(out).toContain('## Index (3 records — use `kauri_show` or `kauri_query` to fetch)');
   });
 
   test('skips Index section entirely when no indexed records', () => {
     const pinned = [makeRecord({ id: 'kauri-DEC-0001', title: 'Only pinned', pinned: true })];
-    const out = renderText(
-      emptyInput({ counts: { active: 1, pinned: 1, drafts: 0 }, pinned }),
-    );
+    const out = renderText(emptyInput({ counts: { active: 1, pinned: 1, drafts: 0 }, pinned }));
     expect(out).not.toContain('## Index');
   });
 
@@ -327,8 +329,7 @@ describe('renderText — spec example', () => {
       makeRecord({
         id: 'kauri-DEC-0019',
         title: 'Never log user PII or session tokens',
-        body:
-          'All logging must redact email, phone, JWT bodies. Use the `safeLog()` wrapper in src/lib/log.ts.',
+        body: 'All logging must redact email, phone, JWT bodies. Use the `safeLog()` wrapper in src/lib/log.ts.',
         tags: ['security', 'convention'],
         files: [fileAssoc('src/lib/log.ts')],
         pinned: true,
@@ -338,8 +339,7 @@ describe('renderText — spec example', () => {
       makeRecord({
         id: 'kauri-DEC-0031',
         title: 'Postgres is the only datastore',
-        body:
-          'No Redis, no DynamoDB, no in-memory caches that survive request boundaries.',
+        body: 'No Redis, no DynamoDB, no in-memory caches that survive request boundaries.',
         tags: ['architecture', 'data'],
         pinned: true,
         created: '2026-04-01T10:00:00.000Z',
@@ -357,15 +357,31 @@ describe('renderText — spec example', () => {
       }),
     ];
     const indexed: KauriRecord[] = [
-      makeRecord({ id: 'kauri-DEC-0001', title: 'Monorepo with pnpm workspaces', tags: ['architecture'] }),
-      makeRecord({ id: 'kauri-DEC-0002', title: 'All API responses use camelCase', tags: ['convention'] }),
-      makeRecord({ id: 'kauri-DEC-0003', title: 'Vitest for unit, Playwright for e2e', tags: ['testing'] }),
+      makeRecord({
+        id: 'kauri-DEC-0001',
+        title: 'Monorepo with pnpm workspaces',
+        tags: ['architecture'],
+      }),
+      makeRecord({
+        id: 'kauri-DEC-0002',
+        title: 'All API responses use camelCase',
+        tags: ['convention'],
+      }),
+      makeRecord({
+        id: 'kauri-DEC-0003',
+        title: 'Vitest for unit, Playwright for e2e',
+        tags: ['testing'],
+      }),
       makeRecord({
         id: 'kauri-DEC-0004',
         title: 'JWT with 15min access + 7d refresh',
         tags: ['api', 'convention'],
       }),
-      makeRecord({ id: 'kauri-DEC-0047', title: 'Pin Node to 22.x in .nvmrc', tags: ['dependency'] }),
+      makeRecord({
+        id: 'kauri-DEC-0047',
+        title: 'Pin Node to 22.x in .nvmrc',
+        tags: ['dependency'],
+      }),
     ];
     const out = renderText({
       slugLabel: 'kauri',

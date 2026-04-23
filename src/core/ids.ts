@@ -107,7 +107,10 @@ export function formatId(scope: Scope, slug: string, kind: Kind, n: number): str
  */
 export function parseId(id: string): ParsedId {
   if (typeof id !== 'string' || id.length === 0) {
-    throw new KauriError('invalid_input', `id must be a non-empty string, got ${JSON.stringify(id)}`);
+    throw new KauriError(
+      'invalid_input',
+      `id must be a non-empty string, got ${JSON.stringify(id)}`,
+    );
   }
   const parts = id.split('-');
   if (parts.length < 3) {

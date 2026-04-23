@@ -123,10 +123,10 @@ describe('MCP tool round-trips', () => {
       pinned: true,
     });
 
-    const result = await client.request('tools/call', {
+    const result = (await client.request('tools/call', {
       name: 'kauri_project',
       arguments: { source: 'agent:test' },
-    }) as { content: Array<{ type: string; text: string }> };
+    })) as { content: Array<{ type: string; text: string }> };
 
     const text = result.content[0]?.text ?? '';
     expect(text).toContain('Kauri Records');

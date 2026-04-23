@@ -4,7 +4,7 @@ description: Draft a Kauri decision for human review before recording it. This s
 disable-model-invocation: false
 user-invocable: true
 allowed-tools: mcp__kauri__kauri_taxonomy_list mcp__kauri__kauri_query mcp__kauri__kauri_record
-argument-hint: "[topic of the decision]"
+argument-hint: '[topic of the decision]'
 ---
 
 # Propose a Decision
@@ -52,6 +52,7 @@ poorly-worded records from accumulating.
 ## Quality guidelines
 
 A good decision record:
+
 - **Title**: One sentence, starts with a verb or states the choice clearly.
   Good: "Use JWT with 15-minute refresh tokens". Bad: "Auth stuff".
 - **Body**: Explains WHY, not just WHAT. Includes the trade-off or
@@ -67,4 +68,4 @@ A good decision record:
 
 - Trivial choices (variable naming, import order)
 - Temporary workarounds with a known fix date
-- Facts or observations — decisions are *choices with rationale*
+- Facts or observations — decisions are _choices with rationale_

@@ -11,7 +11,12 @@
  */
 import { readFileSync } from 'node:fs';
 
-import { compareFile, isTimeStale, type FreshFileStat, type StoredFileState } from '../core/staleness.ts';
+import {
+  compareFile,
+  isTimeStale,
+  type FreshFileStat,
+  type StoredFileState,
+} from '../core/staleness.ts';
 import type { FileAssoc, KauriRecord, ScopeQuery } from '../core/types.ts';
 import type { FsProbe } from '../fs/files.ts';
 
@@ -84,11 +89,7 @@ interface BundleCheckResult {
   readonly stale: readonly StaleRecord[];
 }
 
-function checkBundle(
-  bundle: StoreBundle,
-  now: Date,
-  probe: FsProbe,
-): BundleCheckResult {
+function checkBundle(bundle: StoreBundle, now: Date, probe: FsProbe): BundleCheckResult {
   // Fetch all active records from this store.
   const { records: activeRecords } = bundle.records.query({
     status: 'active',

@@ -14,7 +14,12 @@ export function registerPin(program: Command): void {
       try {
         const result = pinRecord(ctx, id, getSource(cmd));
         if (json) {
-          printJson({ id: result.record.id, pinned: true, pinnedCount: result.pinnedCount, warnings: result.warnings });
+          printJson({
+            id: result.record.id,
+            pinned: true,
+            pinnedCount: result.pinnedCount,
+            warnings: result.warnings,
+          });
         } else {
           printText(`Pinned ${result.record.id} (${result.pinnedCount} total pinned)`);
           for (const w of result.warnings) printText(`  warning: ${w.message}`);
@@ -37,7 +42,12 @@ export function registerUnpin(program: Command): void {
       try {
         const result = unpinRecord(ctx, id, getSource(cmd));
         if (json) {
-          printJson({ id: result.record.id, pinned: false, pinnedCount: result.pinnedCount, warnings: result.warnings });
+          printJson({
+            id: result.record.id,
+            pinned: false,
+            pinnedCount: result.pinnedCount,
+            warnings: result.warnings,
+          });
         } else {
           printText(`Unpinned ${result.record.id} (${result.pinnedCount} total pinned)`);
         }

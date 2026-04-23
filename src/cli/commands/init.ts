@@ -18,8 +18,7 @@ export function registerInit(program: Command): void {
       const json = isJsonMode(cmd);
       try {
         const scope = opts.scope === 'user' ? 'user' : 'project';
-        const storePath =
-          scope === 'user' ? userStorePath() : projectStorePathFor(process.cwd());
+        const storePath = scope === 'user' ? userStorePath() : projectStorePathFor(process.cwd());
         const slug = opts.slug ?? (scope === 'project' ? basename(process.cwd()) : undefined);
 
         const result = initStore({
