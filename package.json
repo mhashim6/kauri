@@ -1,12 +1,27 @@
 {
   "name": "kauri",
-  "version": "0.1.0-dev",
+  "version": "0.1.0",
   "description": "A deterministic record database for LLM agents and humans",
   "type": "module",
-  "private": true,
+  "license": "MIT",
   "bin": {
     "kauri": "./dist/kauri"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhashim6/kauri.git"
+  },
+  "homepage": "https://github.com/mhashim6/kauri",
+  "bugs": "https://github.com/mhashim6/kauri/issues",
+  "keywords": [
+    "decisions",
+    "architecture",
+    "mcp",
+    "llm",
+    "agent",
+    "claude-code",
+    "sqlite"
+  ],
   "scripts": {
     "dev": "bun run src/cli.ts",
     "embed-migrations": "bun run scripts/embed-migrations.ts",
