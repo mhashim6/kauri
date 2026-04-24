@@ -18,15 +18,15 @@ jobs:
           - os: macos-latest
             target: bun-darwin-arm64
             artifact: kauri-darwin-arm64
-          - os: macos-latest-large
-            target: bun-darwin-x64
-            artifact: kauri-darwin-x64
+          # - os: macos-latest-large
+          #   target: bun-darwin-x64
+          #   artifact: kauri-darwin-x64
           - os: ubuntu-latest
             target: bun-linux-x64
             artifact: kauri-linux-x64
-          - os: windows-latest
-            target: bun-windows-x64
-            artifact: kauri-windows-x64.exe
+          # - os: windows-latest
+          #   target: bun-windows-x64
+          #   artifact: kauri-windows-x64.exe
 
     runs-on: ${{ matrix.os }}
 
@@ -39,6 +39,7 @@ jobs:
       - run: bun run embed-migrations
 
       - name: Build binary
+        shell: bash
         run: |
           bun build --compile --minify \
             --target=${{ matrix.target }} \
@@ -73,8 +74,6 @@ jobs:
             --title "${{ github.event.inputs.tag }}" \
             $NOTES_FLAG \
             artifacts/kauri-darwin-arm64/kauri-darwin-arm64 \
-            artifacts/kauri-darwin-x64/kauri-darwin-x64 \
-            artifacts/kauri-linux-x64/kauri-linux-x64 \
-            artifacts/kauri-windows-x64.exe/kauri-windows-x64.exe
+            artifacts/kauri-linux-x64/kauri-linux-x64
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
