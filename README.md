@@ -30,6 +30,19 @@ PATH.
 Available: `kauri-darwin-arm64`, `kauri-darwin-x64`, `kauri-linux-x64`,
 `kauri-windows-x64.exe`
 
+### Windows (_sorry guys_)
+
+1. Download `kauri-windows-x64.exe` from
+   [Releases](https://github.com/mhashim6/kauri/releases).
+2. Rename it to `kauri.exe` and move it to a directory of your choice (e.g.
+   `C:\Tools\`).
+3. Add that directory to your PATH:
+   - Open **Settings > System > About > Advanced system settings**
+   - Click **Environment Variables**
+   - Under **User variables**, select `Path`, click **Edit**, and add the
+     directory (e.g. `C:\Tools\`)
+4. Restart your terminal and verify with `kauri --version`.
+
 ### Build from source
 
 ```bash
@@ -137,7 +150,6 @@ Every command supports `--json` and `--help`.
 
 ## Documentation
 
-- [`kauri-spec.md`](./kauri-spec.md) — full v0.1 specification
 - [`plugins/claude-code/`](./plugins/claude-code/README.md) — Claude Code plugin
 
 ## License

@@ -14,9 +14,10 @@ are relevant. This prevents accidentally contradicting past choices.
 
 ## Steps
 
-1. **Search by topic**: Run `kauri_query` with `--text "$ARGUMENTS"` to find
-   decisions related to what you're about to do. If the argument is a file
-   path, also search with `--file` to find decisions associated with that file.
+1. **Search by topic**: Run `kauri_query` with `--text "$ARGUMENTS"` and
+   `--scope both` to find decisions across project and user scopes. If the
+   argument is a file path, also search with `--file` to find decisions
+   associated with that file.
 
 2. **Broaden if needed**: If the text search returns nothing, try searching by
    related tags (use `kauri_taxonomy_list` to see available tags, then

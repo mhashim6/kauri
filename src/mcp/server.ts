@@ -34,7 +34,7 @@ import { addTag, listTags } from '../services/taxonomy-service.ts';
 export async function startMcpServer(ctx: ServiceContext): Promise<void> {
   const server = new McpServer({
     name: 'kauri',
-    version: '0.1.0',
+    version: '0.1.2',
   });
 
   // --- kauri_record ---

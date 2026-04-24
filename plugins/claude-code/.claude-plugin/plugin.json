@@ -1,6 +1,6 @@
 {
   "name": "kauri",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Kauri — a deterministic record database for LLM agents and humans. Tracks project decisions with structured lifecycle semantics, file-based staleness detection, and full-text search.",
   "author": {
     "name": "Kauri contributors"

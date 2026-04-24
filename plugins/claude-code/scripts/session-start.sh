@@ -22,7 +22,7 @@ if ! kauri status --json &>/dev/null 2>&1; then
 fi
 
 # Get the projection and emit it as additionalContext.
-PROJECTION=$(kauri project --source "hook:claude-code-session-start" 2>/dev/null || true)
+PROJECTION=$(kauri project --scope both --source "hook:claude-code-session-start" 2>/dev/null || true)
 
 if [ -z "$PROJECTION" ]; then
   exit 0

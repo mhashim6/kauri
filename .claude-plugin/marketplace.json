@@ -12,7 +12,7 @@
         "path": "plugins/claude-code"
       },
       "description": "Deterministic decision records for agents and humans — hooks, skills, and 12 MCP tools",
-      "version": "0.1.0"
+      "version": "0.1.2"
     }
   ]
 }

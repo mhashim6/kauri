@@ -29,6 +29,7 @@ Use `kauri_record` with:
 - **files**: Any file paths this decision relates to (optional but valuable for staleness detection).
 - **links**: IDs of related decisions (optional — creates bidirectional "see also" links).
 - **source**: `agent:claude-code`
+- **scope**: `project` (default). Use `user` only if the user explicitly asks for a personal/cross-project decision.
 
 ## When NOT to record
 

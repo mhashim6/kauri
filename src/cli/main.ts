@@ -38,7 +38,7 @@ export function buildProgram(): Command {
   program
     .name('kauri')
     .description('A deterministic record database for LLM agents and humans')
-    .version('0.1.0')
+    .version('0.1.2')
     .option('-j, --json', 'Output as JSON', false)
     .option('--source <source>', 'Source attribution', 'manual');
 
