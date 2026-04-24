@@ -24,7 +24,8 @@ With the Claude Code plugin, Kauri is part of every session:
 
 ```bash
 # Use with Claude Code
-claude plugin install kauri-claude-code
+/plugin marketplace add mhashim6/kauri
+/plugin install kauri@kauri
 ```
 
 Works with any MCP-compatible agent (Cursor, Windsurf, etc.) via `kauri serve`.
@@ -51,9 +52,7 @@ brew install kauri
 
 Download the binary for your platform from [Releases](https://github.com/mhashim6/kauri/releases) and add it to your PATH.
 
-Available binaries: `kauri-darwin-arm64`, `kauri-darwin-x64` _(linux and windows are supported, I'm just too cheap to pay for the CI minutes to build them right now, you can build from source or wait a bit :) )_
-
-<!-- Available binaries: `kauri-darwin-arm64`, `kauri-darwin-x64`, `kauri-linux-x64`, `kauri-windows-x64.exe` -->
+Available binaries: `kauri-darwin-arm64`, `kauri-darwin-x64`, `kauri-linux-x64`, `kauri-windows-x64.exe`
 
 ### Build from source
 
@@ -66,7 +65,8 @@ bun install && bun run build
 ### Claude Code plugin
 
 ```bash
-claude plugin install kauri-claude-code
+/plugin marketplace add mhashim6/kauri
+/plugin install kauri@kauri
 ```
 
 Or add the MCP server directly (works with any MCP client):

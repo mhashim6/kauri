@@ -7,11 +7,11 @@
     {
       "name": "kauri",
       "source": {
-        "source": "github",
-        "repo": "mhashim6/kauri",
+        "source": "git-subdir",
+        "url": "mhashim6/kauri",
         "path": "plugins/claude-code"
       },
-      "description": "Decision memory for coding sessions — hooks, skills, and 12 MCP tools",
+      "description": "Deterministic decision records for agents and humans — hooks, skills, and 12 MCP tools",
       "version": "0.1.0"
     }
   ]
