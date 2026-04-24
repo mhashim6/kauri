@@ -51,7 +51,9 @@ brew install kauri
 
 Download the binary for your platform from [Releases](https://github.com/mhashim6/kauri/releases) and add it to your PATH.
 
-Available binaries: `kauri-darwin-arm64`, `kauri-darwin-x64`, `kauri-linux-x64`, `kauri-linux-arm64`
+Available binaries: `kauri-darwin-arm64`, `kauri-darwin-x64` _(linux and windows are supported, I'm just too cheap to pay for the CI minutes to build them right now, you can build from source or wait a bit :) )_
+
+<!-- Available binaries: `kauri-darwin-arm64`, `kauri-darwin-x64`, `kauri-linux-x64`, `kauri-windows-x64.exe` -->
 
 ### Build from source
 
