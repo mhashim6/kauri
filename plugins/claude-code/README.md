@@ -21,14 +21,14 @@ validate decisions as first-class MCP tools.
 
 ## Installation
 
-### From npm
+### From the Kauri marketplace
 
 ```bash
-# Project-level (recommended — shared with team)
-claude plugin install kauri-claude-code --scope project
+# Add the marketplace (one-time)
+/plugin marketplace add mhashim6/kauri
 
-# User-level (all your projects)
-claude plugin install kauri-claude-code --scope user
+# Install the plugin
+/plugin install kauri@kauri
 ```
 
 ### MCP server only (any MCP client)
